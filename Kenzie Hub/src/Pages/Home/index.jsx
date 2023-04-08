@@ -2,6 +2,8 @@ import { api } from '../../Services/API/api';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { StyledHomeContainer } from '../../Styles/ComponentsStyles/homeContainer';
+import Logo from '../../assets/images/Logo.svg';
 export const HomePage = () => {
   const userId = localStorage.getItem('@USERID');
   const token = localStorage.getItem('@TOKEN');
@@ -37,13 +39,27 @@ export const HomePage = () => {
   }
 
   return (
-    <>
-      <div>
-        <h1>Home Page</h1>
-        <button onClick={logout}>Sair</button>
+    <StyledHomeContainer>
+      <div className="logout-container">
+        <figure>
+          <img src={Logo} alt="Kenzie Hub" />
+        </figure>
+        <button className="button-grey" onClick={logout}>
+          Sair
+        </button>
       </div>
-      <h2>Olá, {userData.name}</h2>
-      <h2>{userData.course_module}</h2>
-    </>
+      <div className="border">
+        <div className="welcome-container">
+          <h1 className="title-1">Olá, {userData.name}</h1>
+          <p className="headline">{userData.course_module}</p>
+        </div>
+      </div>
+      <div className="without-content">
+        <h2 className="title-1">Que pena estamos em desenvolvimento :(</h2>
+        <p className="headline">
+          Nossa aplicação está em desenvolvimento, em breve teremos novidades
+        </p>
+      </div>
+    </StyledHomeContainer>
   );
 };

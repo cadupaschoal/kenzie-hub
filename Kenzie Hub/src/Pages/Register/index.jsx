@@ -5,8 +5,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterSchema } from '../../Services/Schemas/registerSchema';
 import { useNavigate } from 'react-router-dom';
+import { StyledRegisterContainer } from '../../Styles/ComponentsStyles/registerContainer';
+import Logo from '../../assets/images/Logo.svg';
 export const RegisterPage = () => {
   const navigate = useNavigate();
+
+  const back = () => {
+    navigate('/');
+  };
 
   const {
     register,
@@ -37,72 +43,85 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Cadastro</h1>
-      <form onSubmit={handleSubmit(submit)} noValidate>
-        <Input
-          label="Nome: "
-          type="string"
-          placeholder="Nome"
-          {...register('name')}
-        />
-        {errors.name ? <p>{errors.name.message}</p> : null}
-        <Input
-          label="E-mail: "
-          type="email"
-          placeholder="E-mail"
-          {...register('email')}
-        />
-        {errors.email ? <p>{errors.email.message}</p> : null}
-        <Input
-          label="Senha: "
-          type="password"
-          placeholder="Senha"
-          {...register('password')}
-        />
-        {errors.password ? <p>{errors.password.message}</p> : null}
-        <Input
-          label="Confirmar senha: "
-          type="password"
-          placeholder="Confirmar senha"
-          {...register('confirm')}
-        />
-        {errors.confirm ? <p>{errors.confirm.message}</p> : null}
-        <Input
-          label="Bio: "
-          type="text"
-          placeholder="Bio"
-          {...register('bio')}
-        />
-        {errors.bio ? <p>{errors.bio.message}</p> : null}
-        <Input
-          label="Contato: "
-          type="text"
-          placeholder="Contato"
-          {...register('contact')}
-        />
-        {errors.contact ? <p>{errors.contact.message}</p> : null}
-        <select {...register('course_module', { required: true })}>
-          <Option
-            text="Primeiro Módulo"
-            value="Primeiro módulo (Introdução ao Frontend)"
+    <StyledRegisterContainer>
+      <div className="logout-box">
+        <figure>
+          <img src={Logo} alt="Kenzie hub" />
+        </figure>
+        <button className="button-grey" onClick={back}>
+          Voltar
+        </button>
+      </div>
+      <div className="form__box">
+        <h1 className="title-1">Crie sua conta</h1>
+        <p className="headline">Rápido e grátis, vamos nessa</p>
+        <form onSubmit={handleSubmit(submit)} noValidate>
+          <Input
+            label="Nome: "
+            type="string"
+            placeholder="Nome"
+            {...register('name')}
           />
-          <Option
-            text="Segundo Módulo"
-            value="Segundo módulo (Frontend Avançado)"
+          {errors.name ? <p>{errors.name.message}</p> : null}
+          <Input
+            label="E-mail: "
+            type="email"
+            placeholder="E-mail"
+            {...register('email')}
           />
-          <Option
-            text="Terceiro Módulo"
-            value="Terceiro módulo (Introdução ao Backend)"
+          {errors.email ? <p>{errors.email.message}</p> : null}
+          <Input
+            label="Senha: "
+            type="password"
+            placeholder="Senha"
+            {...register('password')}
           />
-          <Option
-            text="Quarto Módulo"
-            value="Quarto módulo (Backend Avançado)"
+          {errors.password ? <p>{errors.password.message}</p> : null}
+          <Input
+            label="Confirmar senha: "
+            type="password"
+            placeholder="Confirmar senha"
+            {...register('confirm')}
           />
-        </select>
+          {errors.confirm ? <p>{errors.confirm.message}</p> : null}
+          <Input
+            label="Bio: "
+            type="text"
+            placeholder="Bio"
+            {...register('bio')}
+          />
+          {errors.bio ? <p>{errors.bio.message}</p> : null}
+          <Input
+            label="Contato: "
+            type="text"
+            placeholder="Contato"
+            {...register('contact')}
+          />
+          {errors.contact ? <p>{errors.contact.message}</p> : null}
+          <select {...register('course_module', { required: true })}>
+            <Option
+              text="Primeiro Módulo"
+              value="Primeiro módulo (Introdução ao Frontend)"
+            />
+            <Option
+              text="Segundo Módulo"
+              value="Segundo módulo (Frontend Avançado)"
+            />
+            <Option
+              text="Terceiro Módulo"
+              value="Terceiro módulo (Introdução ao Backend)"
+            />
+            <Option
+              text="Quarto Módulo"
+              value="Quarto módulo (Backend Avançado)"
+            />
+          </select>
 
-        <button type="submit">Cadastrar</button>
-      </form>
-    </div>
+          <button className="button-negative" type="submit">
+            Cadastrar
+          </button>
+        </form>
+      </div>
+    </StyledRegisterContainer>
   );
 };

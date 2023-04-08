@@ -4,7 +4,10 @@ export const GlobalButtons = createGlobalStyle`
    button{
     display: inline-flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
+    cursor: pointer;
+    transition: 0.3s;
     }
 
     .button-primary{
@@ -41,7 +44,9 @@ export const GlobalButtons = createGlobalStyle`
         color: #FFFFFF;
 
         :hover{
-            background-color: var(--color-grey-2)
+            background-color: var(--color-grey-2);
+            border: solid 1px var(--color-grey-2);
+        
         }
     }
 

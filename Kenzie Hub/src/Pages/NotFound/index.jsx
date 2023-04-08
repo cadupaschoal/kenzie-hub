@@ -1,3 +1,9 @@
+import { StyledNotFoundContainer } from '../../Styles/ComponentsStyles/notFoundContainer';
+
 export const NotFoud = () => {
-  return <h1> 404 PÁGINA NÃO ENCONTRADA :(</h1>;
+  return (
+    <StyledNotFoundContainer>
+      <h1> 404 PÁGINA NÃO ENCONTRADA :(</h1>
+    </StyledNotFoundContainer>
+  );
 };
