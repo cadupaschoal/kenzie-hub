@@ -17,7 +17,7 @@ export const StyledHomeContainer = styled.div`
     padding: 17px 11px 0 13px;
     max-width: 800px;
 
-    button {
+    a {
       padding: 1.5px 16.24px;
     }
   }

@@ -1,9 +1,10 @@
 import { api } from '../../Services/API/api';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { StyledHomeContainer } from '../../Styles/ComponentsStyles/homeContainer';
 import Logo from '../../assets/images/Logo.svg';
+
 export const HomePage = () => {
   const userId = localStorage.getItem('@USERID');
   const token = localStorage.getItem('@TOKEN');
@@ -13,7 +14,6 @@ export const HomePage = () => {
 
   const logout = () => {
     localStorage.clear();
-    navigate('/');
   };
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const HomePage = () => {
         });
         setUserData(response.data);
       } catch (error) {
-        console.log(error);
+        toast.error(error);
       } finally {
         setLoading(false);
       }
@@ -44,9 +44,9 @@ export const HomePage = () => {
         <figure>
           <img src={Logo} alt="Kenzie Hub" />
         </figure>
-        <button className="button-grey" onClick={logout}>
+        <Link className="button-grey" onClick={logout} to={'/'}>
           Sair
-        </button>
+        </Link>
       </div>
       <div className="border">
         <div className="welcome-container">

@@ -7,11 +7,15 @@ import { GlobalStyle } from './Styles/Globals/globalStyles';
 import { GlobalInputs } from './Styles/Globals/inputs';
 import { GlobalButtons } from './Styles/Globals/buttons';
 import { GlobalTypography } from './Styles/Globals/typography';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { StyledToastContainer } from './Styles/ComponentsStyles/toast';
 
 function App() {
   return (
     <div className="App">
       <GlobalStyle />
+      <StyledToastContainer autoClose={2000} theme="dark" />
       <GlobalInputs />
       <GlobalButtons />
       <GlobalTypography />

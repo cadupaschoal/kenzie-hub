@@ -4,15 +4,12 @@ import { Option } from '../../Components/Options';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterSchema } from '../../Services/Schemas/registerSchema';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { StyledRegisterContainer } from '../../Styles/ComponentsStyles/registerContainer';
 import Logo from '../../assets/images/Logo.svg';
+import { toast } from 'react-toastify';
 export const RegisterPage = () => {
   const navigate = useNavigate();
-
-  const back = () => {
-    navigate('/');
-  };
 
   const {
     register,
@@ -24,7 +21,6 @@ export const RegisterPage = () => {
 
   const submit = async (formData) => {
     const { name, password, email, bio, course_module, contact } = formData;
-    console.log(name, password, email, bio, contact, course_module);
     try {
       const response = await api.post('/users', {
         name: name,
@@ -35,10 +31,13 @@ export const RegisterPage = () => {
         course_module: course_module,
       });
       if (response.status === 201) {
-        navigate('/');
+        toast.success('Cadastro realizado com sucesso');
+        setTimeout(() => {
+          navigate('/');
+        }, 2100);
       }
     } catch (error) {
-      console.log(error.message);
+      toast.error('Ops, algo deu errado');
     }
   };
 
@@ -48,9 +47,9 @@ export const RegisterPage = () => {
         <figure>
           <img src={Logo} alt="Kenzie hub" />
         </figure>
-        <button className="button-grey" onClick={back}>
+        <Link className="button-grey" to={'/'}>
           Voltar
-        </button>
+        </Link>
       </div>
       <div className="form__box">
         <h1 className="title-1">Crie sua conta</h1>
@@ -99,6 +98,7 @@ export const RegisterPage = () => {
           />
           {errors.contact ? <p>{errors.contact.message}</p> : null}
           <select {...register('course_module', { required: true })}>
+            <Option text="Selecione um módulo" value="" />
             <Option
               text="Primeiro Módulo"
               value="Primeiro módulo (Introdução ao Frontend)"
@@ -116,8 +116,11 @@ export const RegisterPage = () => {
               value="Quarto módulo (Backend Avançado)"
             />
           </select>
-
-          <button className="button-negative" type="submit">
+          {errors.course_module ? <p>{errors.course_module.message}</p> : null}
+          <button
+            className={errors ? 'button-negative' : 'button-primary'}
+            type="submit"
+          >
             Cadastrar
           </button>
         </form>

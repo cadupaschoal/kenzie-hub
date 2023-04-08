@@ -1,5 +1,5 @@
 import { Input } from '../../Components/Inputs';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema } from '../../Services/Schemas/loginSchema';
@@ -7,6 +7,7 @@ import { api } from '../../Services/API/api';
 import { useState } from 'react';
 import { StyledLoginContainer } from '../../Styles/ComponentsStyles/loginContainer';
 import Logo from '../../assets/images/Logo.svg';
+import { toast } from 'react-toastify';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -19,11 +20,6 @@ export const LoginPage = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const handleRegister = (event) => {
-    event.preventDefault();
-    navigate('/register');
-  };
-
   const submit = async (formData) => {
     try {
       const response = await api.post('/sessions', formData);
@@ -34,7 +30,7 @@ export const LoginPage = () => {
         localStorage.setItem('@USERID', response.data.user.id);
       }
     } catch (error) {
-      console.log(error);
+      toast.error('Ops, algo deu errado');
     }
   };
 
@@ -66,9 +62,9 @@ export const LoginPage = () => {
         </form>
         <div className="toRegister-box">
           <p className="headline">Ainda não possui conta?</p>
-          <button className="button-disabled" onClick={handleRegister}>
+          <Link className="button-disabled" to={'/register'}>
             Cadastre-se
-          </button>
+          </Link>
         </div>
       </div>
     </StyledLoginContainer>

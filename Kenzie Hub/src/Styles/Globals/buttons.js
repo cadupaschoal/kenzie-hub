@@ -1,13 +1,17 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalButtons = createGlobalStyle`
-   button{
+   button, a{
     display: inline-flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
     cursor: pointer;
     transition: 0.3s;
+    }
+
+    a {
+        text-decoration: none
     }
 
     .button-primary{
