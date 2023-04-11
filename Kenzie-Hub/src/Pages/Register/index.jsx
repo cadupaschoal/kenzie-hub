@@ -37,7 +37,10 @@ export const RegisterPage = () => {
         }, 2100);
       }
     } catch (error) {
-      toast.error('Ops, algo deu errado');
+      console.log(error);
+      error.response.data.message === 'Email already exists'
+        ? toast.error('E-mail já cadastrado')
+        : toast.error('Ops, algo deu errado');
     }
   };
 
