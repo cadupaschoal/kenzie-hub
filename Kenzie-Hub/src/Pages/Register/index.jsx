@@ -1,16 +1,15 @@
-import { api } from '../../Services/API/api';
 import { Input } from '../../Components/Inputs';
 import { Option } from '../../Components/Options';
-import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { StyledRegisterContainer } from './registerContainer';
+import Logo from '../../assets/images/Logo.svg';
+import { useContext } from 'react';
+import { userContext } from '../../Contexts/userContext';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterSchema } from '../../Services/Schemas/registerSchema';
-import { Link, useNavigate } from 'react-router-dom';
-import { StyledRegisterContainer } from '../../Styles/ComponentsStyles/registerContainer';
-import Logo from '../../assets/images/Logo.svg';
-import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
 export const RegisterPage = () => {
-  const navigate = useNavigate();
-
+  const { submitRegister } = useContext(userContext);
   const {
     register,
     handleSubmit,
@@ -18,31 +17,6 @@ export const RegisterPage = () => {
   } = useForm({
     resolver: zodResolver(RegisterSchema),
   });
-
-  const submit = async (formData) => {
-    const { name, password, email, bio, course_module, contact } = formData;
-    try {
-      const response = await api.post('/users', {
-        name: name,
-        email: email,
-        password: password,
-        bio: bio,
-        contact: contact,
-        course_module: course_module,
-      });
-      if (response.status === 201) {
-        toast.success('Cadastro realizado com sucesso');
-        setTimeout(() => {
-          navigate('/');
-        }, 2100);
-      }
-    } catch (error) {
-      console.log(error);
-      error.response.data.message === 'Email already exists'
-        ? toast.error('E-mail já cadastrado')
-        : toast.error('Ops, algo deu errado');
-    }
-  };
 
   return (
     <StyledRegisterContainer>
@@ -57,7 +31,7 @@ export const RegisterPage = () => {
       <div className="form__box">
         <h1 className="title-1">Crie sua conta</h1>
         <p className="headline">Rápido e grátis, vamos nessa</p>
-        <form onSubmit={handleSubmit(submit)} noValidate>
+        <form onSubmit={handleSubmit(submitRegister)} noValidate>
           <Input
             label="Nome: "
             type="string"

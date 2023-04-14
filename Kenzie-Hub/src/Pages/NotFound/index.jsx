@@ -1,4 +1,4 @@
-import { StyledNotFoundContainer } from '../../Styles/ComponentsStyles/notFoundContainer';
+import { StyledNotFoundContainer } from './notFoundContainer';
 
 export const NotFoud = () => {
   return (

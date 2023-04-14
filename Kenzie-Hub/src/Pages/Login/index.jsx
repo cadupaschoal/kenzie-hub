@@ -1,17 +1,16 @@
 import { Input } from '../../Components/Inputs';
 import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { StyledLoginContainer } from './loginContainer';
+import Logo from '../../assets/images/Logo.svg';
+import { userContext } from '../../Contexts/userContext';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema } from '../../Services/Schemas/loginSchema';
-import { api } from '../../Services/API/api';
-import { useState } from 'react';
-import { StyledLoginContainer } from '../../Styles/ComponentsStyles/loginContainer';
-import Logo from '../../assets/images/Logo.svg';
-import { toast } from 'react-toastify';
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState();
+  const { login } = useContext(userContext);
+
   const {
     register,
     handleSubmit,
@@ -20,20 +19,6 @@ export const LoginPage = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const submit = async (formData) => {
-    try {
-      const response = await api.post('/sessions', formData);
-      if (response.status === 200) {
-        navigate('/home');
-        setUser(response.data.user);
-        localStorage.setItem('@TOKEN', response.data.token);
-        localStorage.setItem('@USERID', response.data.user.id);
-      }
-    } catch (error) {
-      toast.error('Ops, algo deu errado');
-    }
-  };
-
   return (
     <StyledLoginContainer>
       <figure>
@@ -41,7 +26,7 @@ export const LoginPage = () => {
       </figure>
       <div className="form__box">
         <h1 className="title-1">Login</h1>
-        <form onSubmit={handleSubmit(submit)} noValidate>
+        <form onSubmit={handleSubmit(login)} noValidate>
           <Input
             label="E-mail: "
             type="email"

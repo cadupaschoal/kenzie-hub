@@ -1,41 +1,15 @@
-import { api } from '../../Services/API/api';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { StyledHomeContainer } from '../../Styles/ComponentsStyles/homeContainer';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { StyledHomeContainer } from './homeContainer';
 import Logo from '../../assets/images/Logo.svg';
+import { userContext } from '../../Contexts/userContext';
+import { TechCard } from '../../Components/TechCard';
 
 export const HomePage = () => {
-  const userId = localStorage.getItem('@USERID');
-  const token = localStorage.getItem('@TOKEN');
-  const [userData, setUserData] = useState();
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  const logout = () => {
-    localStorage.clear();
-  };
-
-  useEffect(() => {
-    const userInfos = async () => {
-      try {
-        const response = await api.get('/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUserData(response.data);
-      } catch (error) {
-        toast.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    userInfos();
-  }, []);
+  const { user, logout, loading } = useContext(userContext);
 
   if (loading) {
-    return <h2>Carregando página...</h2>;
+    return <h2>Carregando página...</h2>; // -> Criar uma loading page
   }
 
   return (
@@ -50,15 +24,18 @@ export const HomePage = () => {
       </div>
       <div className="border">
         <div className="welcome-container">
-          <h1 className="title-1">Olá, {userData.name}</h1>
-          <p className="headline">{userData.course_module}</p>
+          <h1 className="title-1">Olá, {user.name}</h1>
+          <p className="headline">{user.course_module}</p>
         </div>
       </div>
-      <div className="without-content">
-        <h2 className="title-1">Que pena estamos em desenvolvimento :(</h2>
-        <p className="headline">
-          Nossa aplicação está em desenvolvimento, em breve teremos novidades
-        </p>
+      <div className="techs__container">
+        <div className="add__tech">
+          <h1>Tecnologias</h1>
+          <button className="button-grey" type="button">
+            +
+          </button>
+        </div>
+        <TechCard />
       </div>
     </StyledHomeContainer>
   );

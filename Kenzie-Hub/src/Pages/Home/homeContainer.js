@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
 export const StyledHomeContainer = styled.div`
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   background-color: var(--color-grey-4);
   color: var(--color-grey-0);
+  padding-bottom: 30px;
 
   .logout-container {
     display: flex;
@@ -42,8 +44,36 @@ export const StyledHomeContainer = styled.div`
     }
   }
 
-  .without-content {
-    display: none;
+  .techs__container {
+    border: solid 2px green;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 14px 0 12px;
+
+    .add__tech {
+      border: solid 2px blue;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+
+      button {
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+      }
+    }
+
+    .tech__card {
+      border: solid 2px red;
+
+      display: flex;
+      padding: 0 14px 0 12px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
   }
 
   @media (min-width: 800px) {
@@ -57,7 +87,7 @@ export const StyledHomeContainer = styled.div`
       }
     }
 
-    .without-content {
+    .techs__container {
       display: flex;
       flex-direction: column;
       gap: 23px;
