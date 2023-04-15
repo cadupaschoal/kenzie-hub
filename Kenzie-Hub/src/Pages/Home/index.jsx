@@ -4,9 +4,12 @@ import { StyledHomeContainer } from './homeContainer';
 import Logo from '../../assets/images/Logo.svg';
 import { userContext } from '../../Contexts/userContext';
 import { TechCard } from '../../Components/TechCard';
-
+import { EditModal } from '../../Components/EditModal';
+import { CreateModal } from '../../Components/CreateModal';
+import { techsContext } from '../../Contexts/techsContext';
 export const HomePage = () => {
   const { user, logout, loading } = useContext(userContext);
+  const { openCreateTech } = useContext(techsContext);
 
   if (loading) {
     return <h2>Carregando página...</h2>; // -> Criar uma loading page
@@ -31,11 +34,17 @@ export const HomePage = () => {
       <div className="techs__container">
         <div className="add__tech">
           <h1>Tecnologias</h1>
-          <button className="button-grey" type="button">
+          <button
+            className="button-grey"
+            type="button"
+            onClick={() => openCreateTech()}
+          >
             +
           </button>
         </div>
         <TechCard />
+        <CreateModal />
+        <EditModal />
       </div>
     </StyledHomeContainer>
   );

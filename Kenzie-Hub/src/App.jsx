@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StyledToastContainer } from './Styles/toast';
 import { UserProvider } from './Contexts/userContext';
+import { TechProvider } from './Contexts/techsContext';
 
 const App = () => {
   return (
@@ -24,7 +25,14 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route
+            path="/home"
+            element={
+              <TechProvider>
+                <HomePage />
+              </TechProvider>
+            }
+          />
           <Route path="*" element={<NotFoud />} />
         </Routes>
       </UserProvider>
