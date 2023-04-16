@@ -7,7 +7,6 @@ import { GlobalStyle } from './Styles/globalStyles';
 import { GlobalInputs } from './Styles/inputs';
 import { GlobalButtons } from './Styles/buttons';
 import { GlobalTypography } from './Styles/typography';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StyledToastContainer } from './Styles/toast';
 import { UserProvider } from './Contexts/userContext';

@@ -3,9 +3,16 @@ import { techsContext } from '../../Contexts/techsContext';
 import { useForm } from 'react-hook-form';
 import { createTechSchema } from '../../Services/Schemas/createTechSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { StyledCreateModal } from './styled';
 
 export const CreateModal = () => {
-  const { showModalCreate, closeCreate, createTech } = useContext(techsContext);
+  const {
+    showModalCreate,
+    closeCreate,
+    createTech,
+    inputCreate,
+    setInputCreate,
+  } = useContext(techsContext);
   const {
     register,
     handleSubmit,
@@ -15,17 +22,26 @@ export const CreateModal = () => {
   });
 
   return showModalCreate ? (
-    <div role="dialog">
-      <button
-        onClick={() => {
-          closeCreate();
-        }}
-      >
-        X
-      </button>
+    <StyledCreateModal>
+      <div className="register">
+        <h2 className="title-1">Cadastrar Tecnologia</h2>
+        <button
+          onClick={() => {
+            closeCreate();
+          }}
+        >
+          X
+        </button>
+      </div>
       <form onSubmit={handleSubmit(createTech)}>
         <label htmlFor=""> Nome</label>
-        <input type="text" placeholder="Tecnologia" {...register('title')} />
+        <input
+          type="text"
+          placeholder="Tecnologia"
+          {...register('title')}
+          value={inputCreate}
+          onChange={(e) => setInputCreate(e.target.value)}
+        />
         {errors.title ? <p>{errors.title.message}</p> : null}
         <label htmlFor="">Selecionar status</label>
         <select {...register('status')}>
@@ -34,8 +50,10 @@ export const CreateModal = () => {
           <option value="Avançado">Avançado</option>
         </select>
         {errors.status ? <p>{errors.status.message}</p> : null}
-        <button type="submit">Cadastrar Tecnologia</button>
+        <button type="submit" className="button-primary">
+          Cadastrar Tecnologia
+        </button>
       </form>
-    </div>
+    </StyledCreateModal>
   ) : null;
 };

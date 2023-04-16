@@ -4,7 +4,6 @@ import { techsContext } from '../../Contexts/techsContext';
 export const TechCard = () => {
   const { user } = useContext(userContext);
   const { openEditTech } = useContext(techsContext);
-  console.log(user.techs);
   const { techs } = user;
 
   return techs.map((tech) => (
@@ -15,8 +14,8 @@ export const TechCard = () => {
         openEditTech(tech.id, techs);
       }}
     >
-      <h1>{tech.title}</h1>
-      <p>{tech.status}</p>
+      <h2 className="title-1">{tech.title}</h2>
+      <p className="headline">{tech.status}</p>
     </div>
   ));
 };

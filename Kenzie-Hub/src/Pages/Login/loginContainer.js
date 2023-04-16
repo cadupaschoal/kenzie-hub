@@ -49,6 +49,15 @@ export const StyledLoginContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
+    p {
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--color-negative);
+      font-weight: 600;
+      margin-bottom: 10px;
+      align-self: flex-start;
+    }
+
     .input__box {
       width: 100%;
 

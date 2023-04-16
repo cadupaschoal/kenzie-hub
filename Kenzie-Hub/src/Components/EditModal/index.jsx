@@ -4,10 +4,19 @@ import { useForm } from 'react-hook-form';
 import { editModalSchema } from '../../Services/Schemas/editTechlSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '../../Services/API/api';
+import { StyledEditModal } from './styled';
+import { toast } from 'react-toastify';
 
 export const EditModal = () => {
-  const { showModalEdit, currentTech, closeEditTech, editTech, token } =
-    useContext(techsContext);
+  const {
+    showModalEdit,
+    setShowModalEdit,
+    currentTech,
+    setCurrentTech,
+    closeEditTech,
+    editTech,
+    token,
+  } = useContext(techsContext);
 
   const {
     register,
@@ -23,22 +32,26 @@ export const EditModal = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+      setShowModalEdit(false);
+      setCurrentTech([]);
+      toast.success('Tecnologia excluída com sucesso');
     } catch (error) {
-      console.log(error);
+      toast.error('Erro ao excluir tecnologia');
     }
-    console.log(techId);
   };
 
   return showModalEdit ? (
-    <div role="dialog">
-      <button
-        onClick={() => {
-          console.log(currentTech), closeEditTech();
-        }}
-      >
-        X
-      </button>
+    <StyledEditModal>
+      <div className="details">
+        <h2 className="title-1">Tecnologia Detalhes</h2>
+        <button
+          onClick={() => {
+            closeEditTech();
+          }}
+        >
+          X
+        </button>
+      </div>
       <form onSubmit={handleSubmit(editTech)}>
         <label htmlFor={currentTech.title}> Nome do projeto</label>
         <input
@@ -53,15 +66,22 @@ export const EditModal = () => {
           <option value="Intermediario">Intermediário</option>
           <option value="Avançado">Avançado</option>
         </select>
-        <button type="submit" name="editButton">
-          {' '}
-          Salavar alterações
-        </button>
-        <button type="button" onClick={() => deleteTech(currentTech.id)}>
-          {' '}
-          Excluir{' '}
-        </button>
+        {errors.status ? <p>{errors.status.message}</p> : null}
+        <div className="buttons">
+          <button type="submit" className="button-negative">
+            {' '}
+            Salavar alterações
+          </button>
+          <button
+            type="button"
+            className="button-disabled"
+            onClick={() => deleteTech(currentTech.id)}
+          >
+            {' '}
+            Excluir{' '}
+          </button>
+        </div>
       </form>
-    </div>
+    </StyledEditModal>
   ) : null;
 };

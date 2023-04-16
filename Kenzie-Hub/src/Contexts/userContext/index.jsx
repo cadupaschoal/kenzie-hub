@@ -15,7 +15,6 @@ export const UserProvider = ({ children }) => {
     try {
       const response = await api.post('/sessions', formData);
       if (response.status === 200) {
-        console.log(response);
         navigate('/home');
         setUser(response.data.user);
         localStorage.setItem('@TOKEN', response.data.token);
@@ -48,7 +47,6 @@ export const UserProvider = ({ children }) => {
         }, 2100);
       }
     } catch (error) {
-      console.log(error);
       error.response.data.message === 'Email already exists'
         ? toast.error('E-mail já cadastrado')
         : toast.error('Ops, algo deu errado');
@@ -68,7 +66,6 @@ export const UserProvider = ({ children }) => {
         });
         setUser(response.data);
       } catch (error) {
-        console.log(error);
         localStorage.clear();
       }
     };

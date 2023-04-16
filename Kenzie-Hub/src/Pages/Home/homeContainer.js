@@ -44,35 +44,71 @@ export const StyledHomeContainer = styled.div`
     }
   }
 
+  .add__tech {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 22px 0;
+    padding: 0px 14px 0px 12px;
+    width: 100%;
+    max-width: 800px;
+
+    button {
+      width: 32px;
+      height: 32px;
+      font-size: 24px;
+    }
+
+    h2 {
+      font-weight: 600;
+    }
+  }
+
   .techs__container {
-    border: solid 2px green;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    padding: 0 14px 0 12px;
+    width: 95%;
+    margin: 0 auto;
+    padding: 22px 8.5px;
+    background-color: var(--color-grey-3);
+    border-radius: 4px;
 
-    .add__tech {
-      border: solid 2px blue;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 22px;
+    .none {
+      align-self: center;
+    }
 
-      button {
-        width: 32px;
-        height: 32px;
-        font-size: 24px;
-      }
+    h2 {
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 12px;
     }
 
     .tech__card {
-      border: solid 2px red;
-
+      border-radius: 4px;
       display: flex;
+      height: 50px;
       padding: 0 14px 0 12px;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 16px;
+      background-color: var(--color-grey-4);
+      cursor: pointer;
+      font-size: 14px;
+
+      :hover {
+        background-color: var(--color-grey-2);
+        transition: 0.3s;
+      }
+
+      h2 {
+        color: var(--color-grey-0);
+      }
+
+      p {
+        color: var(--color-grey-1);
+      }
     }
   }
 
@@ -90,18 +126,9 @@ export const StyledHomeContainer = styled.div`
     .techs__container {
       display: flex;
       flex-direction: column;
-      gap: 23px;
+      gap: 16px;
       width: 800px;
-      padding: 0 12px;
-      margin-top: 37px;
-
-      h2 {
-        font-size: 18px;
-      }
-
-      p {
-        font-size: 16px;
-      }
+      padding: 23px 26px 24px 22px;
     }
   }
 `;

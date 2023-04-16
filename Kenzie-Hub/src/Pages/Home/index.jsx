@@ -7,12 +7,13 @@ import { TechCard } from '../../Components/TechCard';
 import { EditModal } from '../../Components/EditModal';
 import { CreateModal } from '../../Components/CreateModal';
 import { techsContext } from '../../Contexts/techsContext';
+import { LoadingPage } from '../Loading';
 export const HomePage = () => {
   const { user, logout, loading } = useContext(userContext);
   const { openCreateTech } = useContext(techsContext);
 
   if (loading) {
-    return <h2>Carregando página...</h2>; // -> Criar uma loading page
+    return <LoadingPage />;
   }
 
   return (
@@ -31,21 +32,22 @@ export const HomePage = () => {
           <p className="headline">{user.course_module}</p>
         </div>
       </div>
-      <div className="techs__container">
-        <div className="add__tech">
-          <h1>Tecnologias</h1>
-          <button
-            className="button-grey"
-            type="button"
-            onClick={() => openCreateTech()}
-          >
-            +
-          </button>
-        </div>
-        <TechCard />
-        <CreateModal />
-        <EditModal />
+      <div className="add__tech">
+        <h2 className="title-1">Tecnologias</h2>
+        <button
+          className="button-grey"
+          type="button"
+          onClick={() => openCreateTech()}
+        >
+          +
+        </button>
       </div>
+
+      <div className="techs__container">
+        <TechCard />
+      </div>
+      <CreateModal />
+      <EditModal />
     </StyledHomeContainer>
   );
 };

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { api } from '../../Services/API/api';
 import { userContext } from '../userContext';
+import { toast } from 'react-toastify';
 
 export const techsContext = createContext({});
 
@@ -10,6 +11,7 @@ export const TechProvider = ({ children }) => {
   const [showModalCreate, setShowModalCreate] = useState(false);
   const [currentTech, setCurrentTech] = useState([]);
   const { user, setUser } = useContext(userContext);
+  const [inputCreate, setInputCreate] = useState('');
 
   useEffect(() => {
     const updateUserTechs = async () => {
@@ -19,11 +21,13 @@ export const TechProvider = ({ children }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response);
-      } catch (error) {}
+        setUser({ ...user, techs: response.data.techs });
+      } catch (error) {
+        toast.error(error.data.message);
+      }
     };
     updateUserTechs();
-  }, [currentTech]);
+  }, [showModalCreate, showModalEdit]);
 
   const createTech = async (data) => {
     try {
@@ -32,23 +36,26 @@ export const TechProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+      setInputCreate('');
+      setShowModalCreate(false);
+      toast.success('Tecnologia adicionada com sucesso');
+      setCurrentTech(response.data);
     } catch (error) {
-      console.log(error);
+      toast.error('Não foi possível adicionar a tecnologia');
     }
   };
 
   const editTech = async (data) => {
-    console.log(currentTech.id);
     try {
       const response = await api.put(`users/techs/${currentTech.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+      setShowModalEdit(false);
+      toast.success('Tecnologia atualizada com sucesso');
     } catch (error) {
-      console.log(error);
+      toast.error('Não foi possível atualizar a tecnologia');
     }
   };
 
@@ -68,7 +75,9 @@ export const TechProvider = ({ children }) => {
   };
 
   const closeCreate = () => {
+    setInputCreate('');
     setShowModalCreate(false);
+    setCurrentTech([]);
   };
 
   return (
@@ -87,6 +96,8 @@ export const TechProvider = ({ children }) => {
         setCurrentTech,
         createTech,
         editTech,
+        inputCreate,
+        setInputCreate,
       }}
     >
       {children}
