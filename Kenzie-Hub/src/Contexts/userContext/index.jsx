@@ -25,6 +25,12 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    if (token) {
+      navigate('/home');
+    }
+  }, []);
+
   const logout = () => {
     localStorage.removeItem('@TOKEN');
     localStorage.removeItem('@USERID');

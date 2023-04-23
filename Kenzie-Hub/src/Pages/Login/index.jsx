@@ -1,5 +1,5 @@
 import { Input } from '../../Components/Inputs';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { StyledLoginContainer } from './loginContainer';
 import Logo from '../../assets/images/Logo.svg';
@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema } from '../../Services/Schemas/loginSchema';
 
 export const LoginPage = () => {
-  const { login, token, navigate } = useContext(userContext);
+  const { login } = useContext(userContext);
 
   const {
     register,
@@ -18,12 +18,6 @@ export const LoginPage = () => {
   } = useForm({
     resolver: zodResolver(LoginSchema),
   });
-
-  useEffect(() => {
-    if (token) {
-      navigate('/home');
-    }
-  }, []);
 
   return (
     <StyledLoginContainer>
