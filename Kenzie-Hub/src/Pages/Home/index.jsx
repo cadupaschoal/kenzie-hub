@@ -9,7 +9,7 @@ import { CreateModal } from '../../Components/CreateModal';
 import { techsContext } from '../../Contexts/techsContext';
 import { LoadingPage } from '../Loading';
 export const HomePage = () => {
-  const { user, logout, loading } = useContext(userContext);
+  const { user, setUser, logout, loading } = useContext(userContext);
   const { openCreateTech } = useContext(techsContext);
 
   if (loading) {
@@ -34,11 +34,7 @@ export const HomePage = () => {
       </div>
       <div className="add__tech">
         <h2 className="title-1">Tecnologias</h2>
-        <button
-          className="button-grey"
-          type="button"
-          onClick={() => openCreateTech()}
-        >
+        <button className="button-grey" type="button" onClick={openCreateTech}>
           +
         </button>
       </div>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { api } from '../../Services/API/api';
 import { userContext } from '../userContext';
 import { toast } from 'react-toastify';
@@ -13,35 +13,26 @@ export const TechProvider = ({ children }) => {
   const { user, setUser } = useContext(userContext);
   const [inputCreate, setInputCreate] = useState('');
 
-  useEffect(() => {
-    const updateUserTechs = async () => {
+  const createTech = async (data) => {
+    const verify = user.techs.find((tech) => tech.title === data.title);
+    if (verify) {
+      toast.warn('Este usuário já possui esta tecnologia');
+    } else {
       try {
-        const response = await api.get('/profile', {
+        const response = await api.post('/users/techs', data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser({ ...user, techs: response.data.techs });
+        if (response.status === 201) {
+          setShowModalCreate(false);
+          createUserTech(response.data);
+          setCurrentTech(response.data);
+          toast.success('Tecnologia adicionada com sucesso');
+        }
       } catch (error) {
-        toast.error(error.data.message);
+        toast.error('Não foi possível adicionar a tecnologia');
       }
-    };
-    updateUserTechs();
-  }, [showModalCreate, showModalEdit]);
-
-  const createTech = async (data) => {
-    try {
-      const response = await api.post('/users/techs', data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setInputCreate('');
-      setShowModalCreate(false);
-      toast.success('Tecnologia adicionada com sucesso');
-      setCurrentTech(response.data);
-    } catch (error) {
-      toast.error('Não foi possível adicionar a tecnologia');
     }
   };
 
@@ -52,10 +43,30 @@ export const TechProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setShowModalEdit(false);
-      toast.success('Tecnologia atualizada com sucesso');
+      if (response.status === 201) {
+        const updated = user.techs.filter(
+          (tech) => tech.id !== response.data.id
+        );
+        const newList = [...updated, response.data];
+        setUser({ ...user, techs: newList });
+        toast.success('Tecnologia atualizada com sucesso');
+        setShowModalEdit(false);
+      }
     } catch (error) {
       toast.error('Não foi possível atualizar a tecnologia');
+    }
+  };
+
+  const createUserTech = (element) => {
+    const newList = [element, ...user.techs];
+    setUser({ ...user, techs: newList });
+  };
+
+  const updateUserTech = (element) => {
+    if (currentTech.status === element.status) {
+      toast.warn('Nenhuma alteração foi feita');
+    } else {
+      editTech(element);
     }
   };
 
@@ -75,7 +86,6 @@ export const TechProvider = ({ children }) => {
   };
 
   const closeCreate = () => {
-    setInputCreate('');
     setShowModalCreate(false);
     setCurrentTech([]);
   };
@@ -98,6 +108,7 @@ export const TechProvider = ({ children }) => {
         editTech,
         inputCreate,
         setInputCreate,
+        updateUserTech,
       }}
     >
       {children}

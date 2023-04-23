@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { techsContext } from '../../Contexts/techsContext';
 import { useForm } from 'react-hook-form';
 import { createTechSchema } from '../../Services/Schemas/createTechSchema';
@@ -21,20 +21,18 @@ export const CreateModal = () => {
     resolver: zodResolver(createTechSchema),
   });
 
+  useEffect(() => {
+    setInputCreate('');
+  }, [showModalCreate]);
+
   return showModalCreate ? (
     <StyledCreateModal>
       <div className="register">
         <h2 className="title-1">Cadastrar Tecnologia</h2>
-        <button
-          onClick={() => {
-            closeCreate();
-          }}
-        >
-          X
-        </button>
+        <button onClick={closeCreate}>X</button>
       </div>
-      <form onSubmit={handleSubmit(createTech)}>
-        <label htmlFor=""> Nome</label>
+      <form onSubmit={handleSubmit(createTech)} noValidate>
+        <label htmlFor=""> Nome </label>
         <input
           type="text"
           placeholder="Tecnologia"

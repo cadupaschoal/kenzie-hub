@@ -26,7 +26,8 @@ export const UserProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem('@TOKEN');
+    localStorage.removeItem('@USERID');
   };
 
   const submitRegister = async (formData) => {

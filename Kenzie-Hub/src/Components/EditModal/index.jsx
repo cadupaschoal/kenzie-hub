@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '../../Services/API/api';
 import { StyledEditModal } from './styled';
 import { toast } from 'react-toastify';
+import { userContext } from '../../Contexts/userContext';
 
 export const EditModal = () => {
   const {
@@ -14,9 +15,11 @@ export const EditModal = () => {
     currentTech,
     setCurrentTech,
     closeEditTech,
-    editTech,
+    updateUserTech,
     token,
   } = useContext(techsContext);
+
+  const { user, setUser } = useContext(userContext);
 
   const {
     register,
@@ -34,10 +37,16 @@ export const EditModal = () => {
       });
       setShowModalEdit(false);
       setCurrentTech([]);
+      updateDelete(techId);
       toast.success('Tecnologia excluída com sucesso');
     } catch (error) {
       toast.error('Erro ao excluir tecnologia');
     }
+  };
+
+  const updateDelete = (elementId) => {
+    const newList = user.techs.filter((tech) => tech.id !== elementId);
+    setUser({ ...user, techs: newList });
   };
 
   return showModalEdit ? (
@@ -52,11 +61,12 @@ export const EditModal = () => {
           X
         </button>
       </div>
-      <form onSubmit={handleSubmit(editTech)}>
+      <form onSubmit={handleSubmit(updateUserTech)}>
         <label htmlFor={currentTech.title}> Nome do projeto</label>
         <input
+          readOnly
           type="text"
-          defaultValue={currentTech.title}
+          value={currentTech.title}
           name={currentTech.title}
           id={currentTech.title}
         />

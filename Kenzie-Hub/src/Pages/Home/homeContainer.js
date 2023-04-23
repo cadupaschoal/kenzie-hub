@@ -129,6 +129,10 @@ export const StyledHomeContainer = styled.div`
       gap: 16px;
       width: 800px;
       padding: 23px 26px 24px 22px;
+
+      .none {
+        font-size: 16px;
+      }
     }
   }
 `;

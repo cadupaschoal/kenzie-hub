@@ -25,6 +25,11 @@ export const StyledEditModal = styled.div.attrs({
       width: 100%;
       margin: 18px 0 16px 0;
     }
+    input {
+      :focus {
+        border: 1px solid var(--color-grey-2);
+      }
+    }
     select {
       cursor: pointer;
     }

@@ -6,16 +6,20 @@ export const TechCard = () => {
   const { openEditTech } = useContext(techsContext);
   const { techs } = user;
 
-  return techs.map((tech) => (
-    <div
-      key={tech.id}
-      className="tech__card"
-      onClick={() => {
-        openEditTech(tech.id, techs);
-      }}
-    >
-      <h2 className="title-1">{tech.title}</h2>
-      <p className="headline">{tech.status}</p>
-    </div>
-  ));
+  return techs.length === 0 ? (
+    <p className="title-1 none">Nenhuma tecnologia cadastrada</p>
+  ) : (
+    techs.map((tech) => (
+      <div
+        key={tech.id}
+        className="tech__card"
+        onClick={() => {
+          openEditTech(tech.id, techs);
+        }}
+      >
+        <h2 className="title-1">{tech.title}</h2>
+        <p className="headline">{tech.status}</p>
+      </div>
+    ))
+  );
 };
